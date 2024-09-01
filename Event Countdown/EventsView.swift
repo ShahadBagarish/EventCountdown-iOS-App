@@ -8,11 +8,36 @@
 import SwiftUI
 
 struct EventsView: View {
+    @State var events: [Event]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack{
+            
+            List(events, id: \.self) { event in
+                
+                NavigationLink(value: event) {
+                    EventRow(event: event)
+                }
+                .navigationDestination(for: Event.self) {
+                    event in EventForm(event: event)
+                }
+                
+                
+            }.toolbar(content: {
+                NavigationLink {
+                    EventForm(event: Event(title: "", textColor: Color.gray))
+                } label: {
+                    Image(systemName: "plus")
+                        .foregroundStyle(.black)
+                }
+                
+            })
+        }
     }
 }
 
+
 #Preview {
-    EventsView()
+    EventsView(events: [
+        Event(title: "Halloween", date: Date.now, textColor: Color.yellow)])
 }

@@ -11,7 +11,9 @@ import SwiftUI
 struct Event_CountdownApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            EventsView(events: [
+                Event(title: "Halloween", date: Date.now, textColor: Color.yellow),
+                Event(title: "Halloween", date: Date.now, textColor: Color.yellow)])
         }
     }
 }

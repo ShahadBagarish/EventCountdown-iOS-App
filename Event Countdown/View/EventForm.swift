@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct EventForm: View {
-    @State var event: Event
+    @Binding var event: Event
+    @Binding var viewTitle: String
     
     var body: some View {
         Form{
             TextField(text: $event.title) {
                 Text("Title")
-//                    .foregroundStyle($event.textColor)
             }
+            .foregroundStyle(Color(event.textColor))
+            
             DatePicker(
                 "Date",
                 selection: $event.date,
@@ -23,9 +25,8 @@ struct EventForm: View {
             )
             ColorPicker("Text Color", selection: $event.textColor)
         }
+        
     }
-}
+    
 
-#Preview {
-    EventForm(event: Event(title: "Work", date: Date.now, textColor: Color.yellow))
 }

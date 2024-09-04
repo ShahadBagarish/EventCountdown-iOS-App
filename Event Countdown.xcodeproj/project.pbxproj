@@ -14,6 +14,7 @@
 		5E5970992C7DF406001C48F2 /* EventRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5970982C7DF406001C48F2 /* EventRow.swift */; };
 		5E59709B2C7DF414001C48F2 /* EventForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E59709A2C7DF414001C48F2 /* EventForm.swift */; };
 		5E59709D2C7F16BA001C48F2 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E59709C2C7F16BA001C48F2 /* EventModel.swift */; };
+		5E5970A22C86E7D9001C48F2 /* EventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5970A12C86E7D9001C48F2 /* EventViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		5E5970982C7DF406001C48F2 /* EventRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRow.swift; sourceTree = "<group>"; };
 		5E59709A2C7DF414001C48F2 /* EventForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventForm.swift; sourceTree = "<group>"; };
 		5E59709C2C7F16BA001C48F2 /* EventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
+		5E5970A12C86E7D9001C48F2 /* EventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,10 +60,9 @@
 			isa = PBXGroup;
 			children = (
 				5E5970882C7DF1A9001C48F2 /* Event_CountdownApp.swift */,
-				5E5970962C7DF3E0001C48F2 /* EventsView.swift */,
-				5E5970982C7DF406001C48F2 /* EventRow.swift */,
-				5E59709A2C7DF414001C48F2 /* EventForm.swift */,
-				5E59709C2C7F16BA001C48F2 /* EventModel.swift */,
+				5E59709F2C86E7A0001C48F2 /* View */,
+				5E5970A02C86E7BB001C48F2 /* ViewModel */,
+				5E59709E2C86E792001C48F2 /* Model */,
 				5E59708C2C7DF1AB001C48F2 /* Assets.xcassets */,
 				5E59708E2C7DF1AB001C48F2 /* Preview Content */,
 			);
@@ -74,6 +75,32 @@
 				5E59708F2C7DF1AB001C48F2 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		5E59709E2C86E792001C48F2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5E59709C2C7F16BA001C48F2 /* EventModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5E59709F2C86E7A0001C48F2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5E5970962C7DF3E0001C48F2 /* EventsView.swift */,
+				5E5970982C7DF406001C48F2 /* EventRow.swift */,
+				5E59709A2C7DF414001C48F2 /* EventForm.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5E5970A02C86E7BB001C48F2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5E5970A12C86E7D9001C48F2 /* EventViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,6 +173,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E5970A22C86E7D9001C48F2 /* EventViewModel.swift in Sources */,
 				5E59709B2C7DF414001C48F2 /* EventForm.swift in Sources */,
 				5E5970892C7DF1A9001C48F2 /* Event_CountdownApp.swift in Sources */,
 				5E5970992C7DF406001C48F2 /* EventRow.swift in Sources */,

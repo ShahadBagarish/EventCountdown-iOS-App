@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct Event: Identifiable, Comparable, Hashable {
+struct Event: Comparable, Identifiable, Hashable{
     
     var id = UUID()
     var title: String
@@ -16,14 +16,12 @@ struct Event: Identifiable, Comparable, Hashable {
     var textColor: Color
     
     init() {
-        id = UUID()
         title = ""
         date = Date.now
         textColor = .black
     }
     
-    init(id: UUID, title: String, date: Date, textColor: Color) {
-            self.id = id
+    init(title: String, date: Date, textColor: Color) {
             self.title = title
             self.date = date
             self.textColor = textColor
@@ -35,6 +33,10 @@ struct Event: Identifiable, Comparable, Hashable {
     
     static func == (lhs: Event, rhs: Event) -> Bool {
         return lhs.id == rhs.id && lhs.title == rhs.title
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
     
 }

@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct EventRow: View {
-//    let event: Event
-    @Binding var event: Event
+    var event: Event
     
     var body: some View {
         VStack(alignment: .leading, content: {
@@ -22,3 +21,4 @@ struct EventRow: View {
         
     }
 }
+

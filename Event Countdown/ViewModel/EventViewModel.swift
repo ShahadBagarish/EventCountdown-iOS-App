@@ -29,6 +29,7 @@ import SwiftUI
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
+    
     static func == (lhs: EventViewModel, rhs: EventViewModel) -> Bool {
         return lhs.id == rhs.id
     }

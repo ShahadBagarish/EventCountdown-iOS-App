@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+
 struct Event: Comparable, Identifiable, Hashable{
     
     var id = UUID()
@@ -43,5 +44,5 @@ struct Event: Comparable, Identifiable, Hashable{
 
 enum Mode {
     case add
-    case update(Event)
+    case update
 }

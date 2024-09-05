@@ -9,29 +9,24 @@ import Foundation
 import Observation
 import SwiftUI
 
-@Observable class EventViewModel: Identifiable, Hashable{
 
-    var events: [Event] = []
+class EventViewModel: ObservableObject {
+
+    @Published var events: [Event] = []
     
     init(events: [Event]) {
         self.events = events
     }
     
-    func append(){
-        let newEvent = Event(title: "Test", date: Date.now, textColor: Color.red)
+    func add(){
+        let newEvent = Event(title: "New", date: Date.now, textColor: Color.red)
         events.append(newEvent)
     }
     
-    func remove(id: UUID){
+    func delete(id: UUID){
         events = events.filter { $0.id != id }
     }
     
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
     
-    static func == (lhs: EventViewModel, rhs: EventViewModel) -> Bool {
-        return lhs.id == rhs.id
-    }
 }
  

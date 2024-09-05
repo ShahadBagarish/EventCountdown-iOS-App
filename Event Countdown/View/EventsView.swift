@@ -10,64 +10,71 @@ import SwiftUI
 struct EventsView: View {
     
     //Variable Pool
-    @State var events: [Event]
-//    var mode: Mode
-//    var viewTitle: String
-//    
+//    @EnvironmentObject var events: EventViewModel
+    @EnvironmentObject var events: EventViewModel
+    @State var mode: Mode = .update
+    
+    //    var viewTitle: String
+    //
     
     //Fuction Pool
     private func delete(at offsets: IndexSet) {
-        self.events.remove(atOffsets: offsets)
+        events.events.remove(atOffsets: offsets)
         print(events)
     }
     private func addEvent() {
         let newEvent = Event(title: "New Event", date: Date.now, textColor: Color.black)
-        events.append(newEvent)
+        events.events.append(newEvent)
     }
     
+    private func updateAndSort(event: Event, events: inout [Event]) {
+        if let index = events.firstIndex(where: { $0.id == event.id }) {
+            events[index] = event
+            print("Update result \(events[index].title)")
+        } else {
+            print("New event added to the list")
+            events.append(event)
+        }
+        events.sort{ $0 < $1 }
+    }
     
     var body: some View {
         NavigationStack{
             List {
-                ForEach(events, id: \.self) { event in
+                ForEach(events.events, id: \.self) { event in
                     NavigationLink(value: event) {
                         EventRow(event: event)
                     }
                     .navigationDestination(for: Event.self) {
                         event in EventForm(event: event)
                     }
+                    .swipeActions {
+                        Button(role: .destructive) {
+                            events.delete(id: event.id)
+                        } label: {
+                            Label("Delete" , systemImage: "trash")
+                        }
+                        
+                    }.foregroundStyle(.black)
                 }
-                .onDelete(perform: delete)
-                //                            .onAppear {
-                //                                switch mode {
-                //                                case .edit(let event):
-                //                                    id = event.id
-                //                                    viewTitle = "Edit \(event.title)"
-                //                                case .add:
-                //                                    viewTitle = "Add Event"
-                //                                }
             }
-            
-                        .navigationBarItems(trailing: Button(action: addEvent) {
-                            Image(systemName: "plus")
-                                .foregroundStyle(.black)
-                        })
-//            NavigationLink(destination: {
-////                EventForm(event: events)
-//            }, label: {
-//                Image(systemName: "plus")
-//                    .foregroundStyle(.black)
-//            })
             .navigationTitle(Text("Events"))
+            .toolbar{
+                ToolbarItem{
+                    //                    NavigationLink {
+                    //                        EventForm()
+                    ////                        EventRow(mode: .add, onSave: { event in updateEventsAndSortBaseOnDate(event: event, events: &events)})
+                    //                    }
+                    NavigationLink {
+//                        EventForm(events: events)
+                    } label: {
+                    Image(systemName: "plus")
+                        .foregroundStyle(.black)
+                }
+                    
+                }
+            }
         }
     }
-
-}
-
-#Preview {
-    EventsView(events: [
-        Event(title: "Halloween", date: Date.now, textColor: Color.yellow),
-        Event(title: "Test", date: Date.now, textColor: Color.red),
-        Event(title: "tra", date: Date.now, textColor: Color.blue)
-    ])
+    
 }

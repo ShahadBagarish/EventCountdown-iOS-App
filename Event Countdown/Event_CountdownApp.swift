@@ -16,6 +16,8 @@ struct Event_CountdownApp: App {
     init() {
         if let loadedEvents = fileCache.load() {
             self._events = State(initialValue: loadedEvents)
+            print(fileCache.path)
+            print(self.events)
         } else {
             self._events = State(initialValue: [
                 Event(title: "Halloween", date: Date.now, textColor: .yellow),

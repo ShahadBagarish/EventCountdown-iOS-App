@@ -33,7 +33,7 @@ struct EventsView: View {
                 if events.isEmpty {
                     VStack {
                         VStack{
-                            Image(systemName: "flag.checkered.2.crossed")
+                            Image(systemName: "server.rack")
                                 .font(.system(size: 60, weight: .ultraLight))
                                 .foregroundStyle(Color.gray.opacity(0.3))
                             Text("No coming events")

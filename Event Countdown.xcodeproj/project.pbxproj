@@ -15,6 +15,8 @@
 		5E59709B2C7DF414001C48F2 /* EventForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E59709A2C7DF414001C48F2 /* EventForm.swift */; };
 		5E59709D2C7F16BA001C48F2 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E59709C2C7F16BA001C48F2 /* EventModel.swift */; };
 		5E5970A22C86E7D9001C48F2 /* EventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5970A12C86E7D9001C48F2 /* EventViewModel.swift */; };
+		5E5970C42C89CB2C001C48F2 /* DataPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5970C32C89CB2C001C48F2 /* DataPersistence.swift */; };
+		5E5970C62C8BBB6B001C48F2 /* CodableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5970C52C8BBB6B001C48F2 /* CodableColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		5E59709A2C7DF414001C48F2 /* EventForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventForm.swift; sourceTree = "<group>"; };
 		5E59709C2C7F16BA001C48F2 /* EventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
 		5E5970A12C86E7D9001C48F2 /* EventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewModel.swift; sourceTree = "<group>"; };
+		5E5970C32C89CB2C001C48F2 /* DataPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPersistence.swift; sourceTree = "<group>"; };
+		5E5970C52C8BBB6B001C48F2 /* CodableColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,8 @@
 			isa = PBXGroup;
 			children = (
 				5E59709C2C7F16BA001C48F2 /* EventModel.swift */,
+				5E5970C32C89CB2C001C48F2 /* DataPersistence.swift */,
+				5E5970C52C8BBB6B001C48F2 /* CodableColor.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -176,8 +182,10 @@
 				5E5970A22C86E7D9001C48F2 /* EventViewModel.swift in Sources */,
 				5E59709B2C7DF414001C48F2 /* EventForm.swift in Sources */,
 				5E5970892C7DF1A9001C48F2 /* Event_CountdownApp.swift in Sources */,
+				5E5970C42C89CB2C001C48F2 /* DataPersistence.swift in Sources */,
 				5E5970992C7DF406001C48F2 /* EventRow.swift in Sources */,
 				5E59709D2C7F16BA001C48F2 /* EventModel.swift in Sources */,
+				5E5970C62C8BBB6B001C48F2 /* CodableColor.swift in Sources */,
 				5E5970972C7DF3E0001C48F2 /* EventsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

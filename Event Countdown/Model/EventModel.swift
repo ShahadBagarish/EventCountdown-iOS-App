@@ -9,12 +9,25 @@ import Foundation
 import SwiftUI
 
 
-struct Event: Comparable, Identifiable, Hashable{
+struct Event: Comparable, Identifiable, Hashable, Codable {
     
     var id = UUID()
     var title: String
     var date = Date()
     var textColor: Color
+    
+    enum codingKeys: String, CodingKey {
+        case title
+        case date
+        case textColor
+    }
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: codingKeys.self)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.date = try container.decode(Date.self, forKey: .date)
+        self.textColor = try container.decode(Color.self, forKey: .textColor)
+    }
     
     init() {
         title = ""
@@ -44,5 +57,5 @@ struct Event: Comparable, Identifiable, Hashable{
 
 enum Mode {
     case add
-    case update
+    case update(Event)
 }

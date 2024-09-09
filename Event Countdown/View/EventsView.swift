@@ -12,10 +12,9 @@ struct EventsView: View {
     //Variable Pool
     
     @EnvironmentObject var fileCache: FileSystemCache
-    @State var events: [Event]
+    @Binding var events: [Event]
     
     //Fuction Pool
- 
     private func updateAndSort(event: Event, events: inout [Event]) {
         if let index = events.firstIndex(where: { $0.id == event.id }) {
             events[index] = event
@@ -23,6 +22,7 @@ struct EventsView: View {
         } else {
             print("New event added to the list")
             events.append(event)
+            fileCache.save(events: events)
         }
         events.sort{ $0 < $1 }
     }
@@ -48,21 +48,17 @@ struct EventsView: View {
                         .navigationTitle("Event")
                     }
                 } else {
-                    List(events.indices, id: \.self) { idx in NavigationLink(value: events[idx]) {
-                            EventRow(event: events[idx])
+                    List(events.indices, id: \.self) { index in NavigationLink(value: events[index]) {
+                            EventRow(event: events[index])
                                 .swipeActions {
                                     Button("Delete") {
-                                        events.remove(at: idx)
+                                        events.remove(at: index)
                                         fileCache.save(events: events)
                                     }
                                     .tint(.red)
                                 }
-                                .onTapGesture {
-                                }
-                        }
-                        .navigationTitle("Event")
+                        }.navigationTitle("Event")
                     }
-                    
                     .navigationDestination(for: Event.self) { event in
                         EventForm(mode: .update(event), onSave: {event in updateAndSort(event: event, events: &events)})
                     }
@@ -78,43 +74,6 @@ struct EventsView: View {
                 }
             }
         }
-//        NavigationStack{
-//            List {
-//                ForEach(events, id: \.self) { event in
-//                    NavigationLink(value: event) {
-//                        EventRow(event: event)
-//                    }
-//                    .navigationDestination(for: Event.self) {
-//                        event in  EventForm(mode: .add, onSave: {event in updateAndSort(event: event, events: &events)})
-//                    }
-//                    .swipeActions {
-//                        Button(role: .destructive) {
-////                            events.delete(id: event.id)
-//                        } label: {
-//                            Label("Delete" , systemImage: "trash")
-//                        }
-//                        
-//                    }.foregroundStyle(.black)
-//                }
-//            }
-//            .navigationTitle(Text("Events"))
-//            .toolbar{
-//                ToolbarItem{
-//                    //                    NavigationLink {
-//                    //                        EventForm()
-//                    ////                        EventRow(mode: .add, onSave: { event in updateEventsAndSortBaseOnDate(event: event, events: &events)})
-//                    //                    }
-//                    NavigationLink {
-//                        EventForm(mode: .add, onSave: {event in updateAndSort(event: event, events: &events)})
-////                        EventForm(events: events)
-//                    } label: {
-//                    Image(systemName: "plus")
-//                        .foregroundStyle(.black)
-//                }
-//                    
-//                }
-//            }
-//        }
     }
     
 }

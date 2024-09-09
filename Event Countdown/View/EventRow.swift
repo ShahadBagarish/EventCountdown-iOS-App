@@ -10,6 +10,7 @@ import SwiftUI
 struct EventRow: View {
     var event: Event
     @State private var countDown = ""
+    
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {

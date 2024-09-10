@@ -24,7 +24,7 @@ struct Event_CountdownApp: App {
     
     var body: some Scene {
         WindowGroup {
-            EventsView(events: $events)
+            EventsView(events: events)
                 .environmentObject(fileCache)
         }
     }

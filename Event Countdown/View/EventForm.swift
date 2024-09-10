@@ -14,6 +14,7 @@ struct EventForm: View {
     @State private var date: Date = Date()
     @State private var textColor: Color = .black
     @State var viewTitle: String = ""
+    
     var onSave: (Event) -> Void
     var mode: Mode
     
@@ -25,43 +26,42 @@ struct EventForm: View {
         self.mode = mode
         self.onSave = onSave
         
-        
         switch mode {
         case .add:
             _id = State(initialValue: UUID())
             _title = State(initialValue: "")
             _date = State(initialValue: .now)
             _textColor = State(initialValue: .black)
-            viewTitle = "Add Event"
+            _viewTitle = State(initialValue: "Add Event")
         case .update(let event):
             _id = State(initialValue: event.id)
             _title = State(initialValue: event.title)
             _date = State(initialValue: event.date)
             _textColor = State(initialValue: event.textColor)
-            viewTitle = "Edit \(title)"
+            _viewTitle = State(initialValue: "Edit \(event.title)")
         }
     }
     
     var body: some View {
-        VStack {
+        print("DEBUG: \(mode)")
+        
+        return VStack {
             Form {
-                Section("Edit Options") {
                     TextField("Name", text: $title)
                         .foregroundColor(textColor)
                     DatePicker(
                         "Date",
-                        selection: $date,
-                        displayedComponents: [.date, .hourAndMinute]
+                        selection: $date
                     )
                     ColorPicker("Text color", selection: $textColor)
-                }
             }
             .navigationTitle("\(viewTitle)")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Save") {
+                    Button("save", systemImage: "checkmark") {
                         let updatedEvent = Event(title: title, date: date, textColor: textColor)
+                        
                         onSave(updatedEvent)
                         dismiss()
                     }
@@ -69,15 +69,6 @@ struct EventForm: View {
                     .disabled(title.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
             }
-        }
-    }
-    
-    func titleForFormType(_ mode: Mode) -> String {
-        switch mode {
-        case .add:
-            return "Add Event"
-        case .update(_):
-            return "Edit "
         }
     }
 }

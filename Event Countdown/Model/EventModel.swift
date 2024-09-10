@@ -57,5 +57,5 @@ struct Event: Comparable, Identifiable, Hashable, Codable {
 
 enum Mode {
     case add
-    case update(Event)
+    case update
 }

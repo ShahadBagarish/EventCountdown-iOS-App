@@ -9,41 +9,34 @@ import SwiftUI
 
 struct EventForm: View {
     
+    @Environment(\.dismiss) var dismiss
+    
     @State private var id: UUID = UUID()
     @State private var title: String = ""
     @State private var date: Date = Date()
     @State private var textColor: Color = .black
-    @State var viewTitle: String = ""
     
+    var event: Event? = nil
+    
+    var formMode: Mode
     var onSave: (Event) -> Void
-    var mode: Mode
     
-    @Environment(\.dismiss) var dismiss
-    
-    @State private var navigationTitle: String = ""
-    
-    init(mode: Mode, onSave: @escaping (Event) -> Void) {
-        self.mode = mode
-        self.onSave = onSave
+    init(formMode: Mode, event: Event? = nil, onSave: @escaping (Event) -> Void) {
         
-        switch mode {
-        case .add:
-            _id = State(initialValue: UUID())
-            _title = State(initialValue: "")
-            _date = State(initialValue: .now)
-            _textColor = State(initialValue: .black)
-            _viewTitle = State(initialValue: "Add Event")
-        case .update(let event):
-            _id = State(initialValue: event.id)
-            _title = State(initialValue: event.title)
-            _date = State(initialValue: event.date)
-            _textColor = State(initialValue: event.textColor)
-            _viewTitle = State(initialValue: "Edit \(event.title)")
+        self.formMode = formMode
+        self.onSave = onSave
+        self.event = event
+        
+        if let eventt = event {
+            _id = State(initialValue: eventt.id)
+            _title = State(initialValue: eventt.title)
+            _date = State(initialValue: eventt.date)
+            _textColor = State(initialValue: eventt.textColor)
         }
     }
     
     var body: some View {
-        print("DEBUG: \(mode)")
+        print("DEBUG: \(formMode)")
         
         return VStack {
             Form {
@@ -55,14 +48,13 @@ struct EventForm: View {
                     )
                     ColorPicker("Text color", selection: $textColor)
             }
-            .navigationTitle("\(viewTitle)")
+            .navigationTitle(formMode == .add ? "Add Event" : "Edit Event")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("save", systemImage: "checkmark") {
-                        let updatedEvent = Event(title: title, date: date, textColor: textColor)
-                        
-                        onSave(updatedEvent)
+                        let newEvent = Event(title: title, date: date, textColor: textColor)
+                        onSave(newEvent)
                         dismiss()
                     }
                     .fontWeight(.semibold)

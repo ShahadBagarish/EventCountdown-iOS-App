@@ -8,22 +8,23 @@
 import Foundation
 
 protocol Cache {
-    func save(events: [Event])
-    func load() -> [Event]?
+    func saveToFile(events: [Event])
+    func loadFromFile() -> [Event]?
 }
 
 
-class FileSystemCache: Cache, ObservableObject {
-
+class FileSystemCache: Cache , ObservableObject{
+    
+    private let fileManager = FileManager.default
+    private let fileName = "events.json"
     private let path: URL
     
-    init(){
-        
-//        self.path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!.appendingPathComponent("userEvents.json")
+    init() {
         self.path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!.appendingPathComponent("userEvents.json")
     }
     
-    func save(events: [Event]) {
+    func saveToFile(events: [Event]) {
+        
         do {
             let jsonEncoder = JSONEncoder()
             let jsonData = try jsonEncoder.encode(events)
@@ -34,8 +35,9 @@ class FileSystemCache: Cache, ObservableObject {
         }
     }
     
-    func load() -> [Event]? {
+    func loadFromFile() -> [Event]? {
         do {
+            print(path)
             let jsonData = try Data(contentsOf: self.path)
             
             let jsonDecoder = JSONDecoder()
@@ -43,7 +45,7 @@ class FileSystemCache: Cache, ObservableObject {
             print("Decoded Todo: \(decodedEvents)")
             return decodedEvents
         } catch {
-            print("Error decoding data: \(error)")
+            print("Error load data: \(error)")
             return nil
         }
     }
@@ -55,13 +57,21 @@ class InMemoryCache: Cache, ObservableObject {
     
     var savedData: [Event]?
     
-    func save(events: [Event]) {
+    func saveToFile(events: [Event]) {
         savedData = events
     }
     
-    func load() -> [Event]? {
+    func loadFromFile() -> [Event]? {
         return savedData
     }
     
     
 }
+
+
+
+
+
+    
+
+

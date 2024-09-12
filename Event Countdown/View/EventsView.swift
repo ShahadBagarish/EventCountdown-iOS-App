@@ -9,14 +9,12 @@ import SwiftUI
 
 struct EventsView: View {
     
-    //Variable Pool
-    
     @EnvironmentObject var fileCache: FileSystemCache
     @State var events: [Event]
     @State var eventsViewModel = EventViewModel()
     
-//    @State private var showingForm = false
-//    @State private var selectedEvent: Event? = nil
+    @State private var showingForm = false
+    @State private var selectedEvent: Event? = nil
     
     init(events: [Event]) {
         self.events = events
@@ -65,15 +63,15 @@ struct EventsView: View {
                         .navigationTitle("Event")
                     }
                     .navigationDestination(for: Event.self) { event in
-                        EventForm(formMode: .update) { event in
-                            eventsViewModel.updateAndSort(event: event, events: &events)
+                        EventForm(formMode: .update, event: event) { event in
+                            eventsViewModel.saveEvent(event, events: &events)
                         }
                     }
                     .toolbar {
                         ToolbarItem(placement: .primaryAction){
                             NavigationLink {
                                 EventForm(formMode: .add) { event in
-                                    eventsViewModel.updateAndSort(event: event, events: &events)
+                                    eventsViewModel.saveEvent(event, events: &events)
                                 }
                             } label: {
                                 Image(systemName: "plus")

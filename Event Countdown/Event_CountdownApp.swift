@@ -18,8 +18,7 @@ struct Event_CountdownApp: App {
             self._events = State(initialValue: loadedEvents)
         } else {
             self._events = State(initialValue: [
-                Event(title: "🥳 Birthday", date: .init(), textColor: .red),
-                Event(title: "🏝️ Holiday", date: .init(), textColor: .blue)
+                Event(id: UUID(), title: "Birthday", date: .now, textColor: .black),
             ])
         }
     }

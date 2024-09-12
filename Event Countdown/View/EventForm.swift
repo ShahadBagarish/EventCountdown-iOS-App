@@ -36,8 +36,6 @@ struct EventForm: View {
     }
     
     var body: some View {
-        print("DEBUG: \(formMode)")
-        
         return VStack {
             Form {
                     TextField("Name", text: $title)
@@ -53,7 +51,7 @@ struct EventForm: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("save", systemImage: "checkmark") {
-                        let newEvent = Event(title: title, date: date, textColor: textColor)
+                        let newEvent = Event(id: id, title: title, date: date, textColor: textColor)
                         onSave(newEvent)
                         dismiss()
                     }

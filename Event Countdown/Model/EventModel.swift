@@ -11,12 +11,13 @@ import SwiftUI
 
 struct Event: Comparable, Identifiable, Hashable, Codable {
     
-    var id = UUID()
+    var id: UUID
     var title: String
     var date = Date()
     var textColor: Color
     
     enum codingKeys: String, CodingKey {
+        case id
         case title
         case date
         case textColor
@@ -24,18 +25,21 @@ struct Event: Comparable, Identifiable, Hashable, Codable {
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: codingKeys.self)
+        self.id = try container.decode(UUID.self, forKey: .id)
         self.title = try container.decode(String.self, forKey: .title)
         self.date = try container.decode(Date.self, forKey: .date)
         self.textColor = try container.decode(Color.self, forKey: .textColor)
     }
     
     init() {
+        id = UUID()
         title = ""
         date = Date.now
         textColor = .black
     }
     
-    init(title: String, date: Date, textColor: Color) {
+    init(id: UUID, title: String, date: Date, textColor: Color) {
+            self.id = id
             self.title = title
             self.date = date
             self.textColor = textColor

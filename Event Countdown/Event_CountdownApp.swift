@@ -11,23 +11,23 @@ import SwiftUI
 struct Event_CountdownApp: App {
     
     @StateObject var fileCache = FileSystemCache()
-    @StateObject private var events = EventViewModel()
-    
-//    @StateObject var events: [Event] = [Event(title: "Halloween", date: Date.now, textColor: .yellow)]
-    
-//    init() {
-//        if let loadedEvents = fileCache.load() {
-//            self._events = State(initialValue: loadedEvents)
-////            print(fileCache.path)
-//        } else {
-//            self._events = State(initialValue: [])
-//        }
-//    }
+    @State private var events: [Event] = []
+
+    init() {
+        if let loadedEvents = fileCache.loadFromFile() {
+            self._events = State(initialValue: loadedEvents)
+        } else {
+            self._events = State(initialValue: [
+                Event(title: "🥳 Birthday", date: .init(), textColor: .red),
+                Event(title: "🏝️ Holiday", date: .init(), textColor: .blue)
+            ])
+        }
+    }
     
     var body: some Scene {
         WindowGroup {
-            EventsView()
-                .environmentObject(events)
+            EventsView(events: events)
+                .environmentObject(fileCache)
         }
     }
 }

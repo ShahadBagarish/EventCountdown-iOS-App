@@ -35,6 +35,22 @@ class EventViewModel: ObservableObject {
         fileCache.saveToFile(events: self.events)
     }
     
+    func updateAndSort(event: Event, events: inout [Event]) {
+        if let index = events.firstIndex(where: { $0.id == event.id }) {
+            events[index] = event
+            print("Update result \(events[index].title)")
+            fileCache.saveToFile(events: events)
+        } else {
+            print("New event added to the list")
+            print("DEBUG: \(event)")
+            events.append(event)
+            fileCache.saveToFile(events: events)
+
+//                fileCache.save(events: events)
+        }
+        events.sort{ $0 < $1 }
+    }
+    
   
 }
 

@@ -11,29 +11,19 @@ struct EventsView: View {
     
     //Variable Pool
     
-    @EnvironmentObject var eventsViewModel: EventViewModel
-//    @State var events: [Event]
+    @EnvironmentObject var fileCache: FileSystemCache
+    @State var events: [Event]
+    @State var eventsViewModel = EventViewModel()
+    
     @State private var showingForm = false
     @State private var selectedEvent: Event? = nil
     
-    //Fuction Pool
-    private func updateAndSort(event: Event, events: inout [Event]) {
-        if let index = events.firstIndex(where: { $0.id == event.id }) {
-            events[index] = event
-            print("Update result \(events[index].title)")
-        } else {
-            print("New event added to the list")
-            print("DEBUG: \(event)")
-//            events.append(event)
-//                fileCache.save(events: events)
-        }
-        events.sort{ $0 < $1 }
-    }
+    
     
     var body: some View {
         VStack{
             NavigationStack {
-                if eventsViewModel.events.isEmpty {
+                if events.isEmpty {
                     VStack {
                         VStack{
                             Image(systemName: "server.rack")
@@ -45,7 +35,8 @@ struct EventsView: View {
                         .padding()
                         NavigationLink {
                             EventForm(formMode: .add) { newEvent in
-                                eventsViewModel.events.append(newEvent)
+                                events.append(newEvent)
+                                fileCache.saveToFile(events: events)
                             }
                         } label: {
                             Text("Create first event")
@@ -54,38 +45,32 @@ struct EventsView: View {
                     }
                 } else {
                     List {
-                        ForEach(eventsViewModel.events.indices, id: \.self) { index in
-                            let singleEvent = eventsViewModel.events[index]
-                            NavigationLink(value: singleEvent) {
-                                EventRow(event: singleEvent)
-                                    
-                                .swipeActions {
-                                    Button {
-                                        eventsViewModel.deleteEvent(singleEvent)
-//                                        eventsViewModel.deleteEvent(at: index)
-//                                        events.saveEvent(event: events[index])
-                                    } label: {
-                                        Image(systemName: "trash")
-                                    }.tint(.red)
-                                }
-                        }
-                           
-                        }
-//                        .onDelete(perform: { indexSet in
-//                            eventsViewModel.deleteEvent(at: indexSet)
-//                        })
-                        .navigationTitle("Event")
-                        .navigationDestination(for: Event.self) { event in
-                            EventForm(formMode: .update) { event in
-                                updateAndSort(event: event, events: &eventsViewModel.events)
+                        ForEach(events.indices, id: \.self) { idx in
+                            NavigationLink(value: events[idx]) {
+                                EventRow(event: events[idx])
+                                    .swipeActions {
+                                        Button("Delete") {
+                                            events.remove(at: idx)
+                                            fileCache.saveToFile(events: events)
+                                        }
+                                        .tint(.red)
+                                    }
+                                    .onTapGesture {
+                                    }
                             }
+                        }
+                        .navigationTitle("Event")
+                    }
+                    .navigationDestination(for: Event.self) { event in
+                        EventForm(formMode: .update) { event in
+                            eventsViewModel.updateAndSort(event: event, events: &events)
                         }
                     }
                     .toolbar {
                         ToolbarItem(placement: .primaryAction){
                             NavigationLink {
                                 EventForm(formMode: .add) { event in
-                                    updateAndSort(event: event, events: &eventsViewModel.events)
+                                    eventsViewModel.updateAndSort(event: event, events: &events)
                                 }
                             } label: {
                                 Image(systemName: "plus")

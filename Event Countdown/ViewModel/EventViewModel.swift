@@ -1,5 +1,5 @@
 //
-//  observables.swift
+//  EventViewModel.swift
 //  Event Countdown
 //
 //  Created by Shahad Bagarish on 03/09/2024.

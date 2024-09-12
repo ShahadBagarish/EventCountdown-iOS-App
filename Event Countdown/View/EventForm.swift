@@ -38,15 +38,15 @@ struct EventForm: View {
     var body: some View {
         return VStack {
             Form {
-                    TextField("Name", text: $title)
-                        .foregroundColor(textColor)
-                    DatePicker(
-                        "Date",
-                        selection: $date
-                    )
-                    ColorPicker("Text color", selection: $textColor)
+                TextField("Name", text: $title)
+                    .foregroundColor(textColor)
+                DatePicker(
+                    "Date",
+                    selection: $date
+                )
+                ColorPicker("Text color", selection: $textColor)
             }
-            .navigationTitle(formMode == .add ? "Add Event" : "Edit Event")
+            .navigationTitle(formMode == .add ? "Add Event" : "Edit \(event?.title ?? String())")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {

@@ -15,10 +15,13 @@ struct EventsView: View {
     @State var events: [Event]
     @State var eventsViewModel = EventViewModel()
     
-    @State private var showingForm = false
-    @State private var selectedEvent: Event? = nil
+//    @State private var showingForm = false
+//    @State private var selectedEvent: Event? = nil
     
-    
+    init(events: [Event]) {
+        self.events = events
+        print("DEBUG: \(events)")
+    }
     
     var body: some View {
         VStack{
